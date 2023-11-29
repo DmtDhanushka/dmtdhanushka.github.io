@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Hello bot</title>
-</head>
-<body>
-  <h1>Hello</h1>
-</body>
+<html lang="en-US">
+  <head>
+    <title>Web Chat: Full-featured bundle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script crossorigin="anonymous" src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      #webchat {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="webchat" role="main"></div>
+    <script>
+      (async function() {
+        const res = await fetch('https://webchat-mockbot.azurewebsites.net/directline/token', { method: 'POST' });
+        const { token } = await res.json();
+
+        window.WebChat.renderWebChat(
+          {
+            directLine: window.WebChat.createDirectLine({ secret: 'c7ykcrrHIjs.GVOaiwSxGUVH5zw1kvfVtEErZuTQbJ6tqt049EFrn1k' })
+          },
+          document.getElementById('webchat')
+        );
+
+        document.querySelector('#webchat > *').focus();
+      })().catch(err => console.error(err));
+    </script>
+  </body>
 </html>
